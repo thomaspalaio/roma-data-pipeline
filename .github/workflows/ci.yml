@@ -70,7 +70,7 @@ jobs:
 
       - name: Run minimal pipeline
         run: |
-          roma-data run --output /tmp/test.sqlite --sources pleiades --verbose
+          roma-data run --output /tmp/test.sqlite --sources pleiades
         timeout-minutes: 10
 
       - name: Validate output
