@@ -87,7 +87,7 @@ def validate_database(database: Path, verbose: bool = False) -> dict[str, Any]:
     return results
 
 
-def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
+def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict[str, Any]]:
     """Check that all required tables exist and have data."""
     required_tables = {
         "locations": 1000,  # Minimum expected
@@ -130,7 +130,7 @@ def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, 
     return passed, details
 
 
-def _check_coordinates(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
+def _check_coordinates(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict[str, Any]]:
     """Check that coordinates are valid."""
     cursor = conn.cursor()
 
@@ -175,7 +175,7 @@ def _check_coordinates(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, d
     return passed, details
 
 
-def _check_required_fields(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
+def _check_required_fields(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict[str, Any]]:
     """Check that required fields are populated."""
     cursor = conn.cursor()
 
@@ -220,7 +220,7 @@ def _check_required_fields(conn: sqlite3.Connection, verbose: bool) -> tuple[boo
     return passed, details
 
 
-def _check_fts_indexes(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
+def _check_fts_indexes(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict[str, Any]]:
     """Check that FTS indexes are working."""
     cursor = conn.cursor()
 
@@ -253,7 +253,7 @@ def _check_fts_indexes(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, d
     return passed, details
 
 
-def _check_data_ranges(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
+def _check_data_ranges(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict[str, Any]]:
     """Check that data values are in expected ranges."""
     cursor = conn.cursor()
 
@@ -304,7 +304,7 @@ def _check_data_ranges(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, d
     return passed, details
 
 
-def _check_foreign_keys(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
+def _check_foreign_keys(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict[str, Any]]:
     """Check foreign key relationships (soft check)."""
     cursor = conn.cursor()
 

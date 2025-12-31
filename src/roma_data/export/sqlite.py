@@ -112,7 +112,8 @@ class SQLiteExporter:
             return []
 
         with open(path, encoding="utf-8") as f:
-            return json.load(f)
+            data: list[dict[str, Any]] = json.load(f)
+            return data
 
     def _insert_locations(self, conn: sqlite3.Connection) -> int:
         """Insert locations into database."""

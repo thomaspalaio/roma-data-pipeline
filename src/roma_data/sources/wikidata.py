@@ -13,9 +13,11 @@ from typing import TYPE_CHECKING, Any
 try:
     from SPARQLWrapper import JSON as SPARQL_JSON
     from SPARQLWrapper import SPARQLWrapper
+    HAS_SPARQL = True
 except ImportError:
-    SPARQLWrapper = None
-    SPARQL_JSON = None
+    SPARQLWrapper = None  # type: ignore[misc, assignment]
+    SPARQL_JSON = None  # type: ignore[assignment]
+    HAS_SPARQL = False
 
 from roma_data.constants import WIKIDATA_SPARQL_ENDPOINT
 from roma_data.sources.base import DataSource
@@ -115,7 +117,7 @@ class WikidataSource(DataSource):
         print(f"  Downloaded: {total} Wikidata records")
         return total
 
-    def _query_wikidata(self, query: str, name: str) -> list[dict] | None:
+    def _query_wikidata(self, query: str, name: str) -> list[dict[str, Any]] | None:
         """Execute a SPARQL query against Wikidata."""
         try:
             sparql = SPARQLWrapper(WIKIDATA_SPARQL_ENDPOINT)
@@ -124,12 +126,16 @@ class WikidataSource(DataSource):
             sparql.addCustomHttpHeader("User-Agent", "RomaDataPipeline/1.0")
 
             print(f"  Querying Wikidata for {name}...")
-            results = sparql.query().convert()
+            raw_results = sparql.query().convert()
 
-            bindings = results.get("results", {}).get("bindings", [])
-            print(f"  Found {len(bindings)} results")
-
-            return bindings
+            # Handle the SPARQL response format
+            if isinstance(raw_results, dict):
+                bindings: list[dict[str, Any]] = raw_results.get("results", {}).get("bindings", [])
+                print(f"  Found {len(bindings)} results")
+                return bindings
+            else:
+                print("  Unexpected SPARQL response format")
+                return None
 
         except Exception as e:
             logger.warning(f"SPARQL query error: {e}")
@@ -151,7 +157,7 @@ class WikidataSource(DataSource):
             emperors = json.load(f)
 
         people: list[dict[str, Any]] = []
-        seen_ids: set = set()
+        seen_ids: set[str] = set()
 
         for emp in emperors:
             wikidata_uri = emp.get("person", {}).get("value", "")
@@ -195,7 +201,7 @@ class WikidataSource(DataSource):
             battles = json.load(f)
 
         events: list[dict[str, Any]] = []
-        seen_ids: set = set()
+        seen_ids: set[str] = set()
 
         for battle in battles:
             wikidata_uri = battle.get("battle", {}).get("value", "")

@@ -38,9 +38,9 @@ def transform_locations(config: Config) -> int:
     # Collect locations from Pleiades
     if "pleiades" in config.sources:
         from roma_data.sources.pleiades import PleiadesSource
-        source = PleiadesSource(config)
+        pleiades_source = PleiadesSource(config)
         try:
-            locations = source.transform()
+            locations = pleiades_source.transform()
             for loc in locations:
                 if loc["id"] not in seen_ids:
                     all_locations.append(loc)
@@ -56,8 +56,8 @@ def transform_locations(config: Config) -> int:
     if "orbis" in config.sources:
         try:
             from roma_data.sources.orbis import ORBISSource
-            source = ORBISSource(config)
-            locations = source.transform()
+            orbis_source = ORBISSource(config)
+            locations = orbis_source.transform()
             for loc in locations:
                 if loc["id"] not in seen_ids:
                     all_locations.append(loc)
@@ -70,8 +70,8 @@ def transform_locations(config: Config) -> int:
     if "topostext" in config.sources:
         try:
             from roma_data.sources.topostext import ToposTextSource
-            source = ToposTextSource(config)
-            locations = source.transform()
+            topostext_source = ToposTextSource(config)
+            locations = topostext_source.transform()
             for loc in locations:
                 if loc["id"] not in seen_ids:
                     all_locations.append(loc)

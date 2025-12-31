@@ -33,7 +33,7 @@ jobs:
 
       - name: Run type checking
         run: |
-          pip install mypy
+          pip install mypy types-requests
           mypy src/roma_data --ignore-missing-imports
 
       - name: Run tests

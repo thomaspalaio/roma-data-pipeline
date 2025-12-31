@@ -201,6 +201,9 @@ class ORBISSource(DataSource):
                 target_name = self._site_names.get(target_int, f"Site {target_id}")
 
                 # Calculate travel times for different modes
+                travel_days_foot: float | None
+                travel_days_horse: float | None
+                travel_days_cart: float | None
                 if distance > 0:
                     travel_days_foot = distance / TRAVEL_SPEEDS["foot"]
                     travel_days_horse = distance / TRAVEL_SPEEDS["horse"]

@@ -10,7 +10,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -139,7 +139,7 @@ class Config:
             ROMA_TIME_END: End year filter
             ROMA_VERBOSE: Enable verbose logging (1/true/yes)
         """
-        kwargs: dict[str, object] = {}
+        kwargs: dict[str, Any] = {}
 
         if output_dir := os.environ.get("ROMA_OUTPUT_DIR"):
             kwargs["output_dir"] = Path(output_dir)

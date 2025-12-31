@@ -169,7 +169,7 @@ class AWMCSource(DataSource):
 
     def _calculate_centroid(
         self,
-        coords: list,
+        coords: list[Any],
         geom_type: str,
     ) -> tuple[float, float] | None:
         """Calculate the centroid of a polygon or multipolygon."""

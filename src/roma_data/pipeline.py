@@ -108,33 +108,27 @@ class Pipeline:
 
         if "pleiades" in self.config.sources:
             from roma_data.sources.pleiades import PleiadesSource
-            source = PleiadesSource(self.config)
-            results["pleiades"] = source.download()
+            results["pleiades"] = PleiadesSource(self.config).download()
 
         if "awmc" in self.config.sources:
             from roma_data.sources.awmc import AWMCSource
-            source = AWMCSource(self.config)
-            results["awmc"] = source.download()
+            results["awmc"] = AWMCSource(self.config).download()
 
         if "itinere" in self.config.sources:
             from roma_data.sources.itinere import ItinereSource
-            source = ItinereSource(self.config)
-            results["itinere"] = source.download()
+            results["itinere"] = ItinereSource(self.config).download()
 
         if "wikidata" in self.config.sources:
             from roma_data.sources.wikidata import WikidataSource
-            source = WikidataSource(self.config)
-            results["wikidata"] = source.download()
+            results["wikidata"] = WikidataSource(self.config).download()
 
         if "orbis" in self.config.sources:
             from roma_data.sources.orbis import ORBISSource
-            source = ORBISSource(self.config)
-            results["orbis"] = source.download()
+            results["orbis"] = ORBISSource(self.config).download()
 
         if "topostext" in self.config.sources:
             from roma_data.sources.topostext import ToposTextSource
-            source = ToposTextSource(self.config)
-            results["topostext"] = source.download()
+            results["topostext"] = ToposTextSource(self.config).download()
 
         logger.info(f"Downloaded: {results}")
         return results
@@ -196,7 +190,7 @@ class Pipeline:
         self.config.processed_dir.mkdir(parents=True, exist_ok=True)
         return self._run_transform()
 
-    def build_only(self) -> dict[str, int]:
+    def build_only(self) -> Path:
         """Run only the database build stage."""
         self.config.output_dir.mkdir(parents=True, exist_ok=True)
         return self._run_build()

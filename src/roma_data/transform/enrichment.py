@@ -62,7 +62,8 @@ def _load_json(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         return []
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        data: list[dict[str, Any]] = json.load(f)
+        return data
 
 
 def _save_json(path: Path, data: list[dict[str, Any]]) -> None:

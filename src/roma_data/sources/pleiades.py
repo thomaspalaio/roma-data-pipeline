@@ -133,7 +133,7 @@ class PleiadesSource(DataSource):
                 continue
 
             # Extract coordinates
-            repr_point = place.get("reprPoint")
+            repr_point: list[float] = place.get("reprPoint")  # type: ignore[assignment]
             lon, lat = repr_point[0], repr_point[1]
 
             # Apply bbox filter if configured
@@ -321,15 +321,15 @@ class PleiadesSource(DataSource):
             language = name.get("language", "")
 
             if language in ("la", "lat", "latin") and romanized:
-                return romanized
+                return str(romanized)
             if language in ("la", "lat", "latin") and attested:
-                return attested
+                return str(attested)
 
         for name in names:
             if isinstance(name, dict) and name.get("romanized"):
-                return name["romanized"]
+                return str(name["romanized"])
 
-        return place.get("title", "Unknown")
+        return str(place.get("title", "Unknown"))
 
     def _get_modern_name(self, place: dict[str, Any]) -> str | None:
         """Extract the modern name from a Pleiades place."""
@@ -394,6 +394,6 @@ class PleiadesSource(DataSource):
                     row = match.group(3)
                     return f"Map {map_num} {col}{row}"
 
-                return citation[:100]
+                return str(citation[:100])
 
         return None
