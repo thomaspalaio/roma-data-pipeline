@@ -1,0 +1,53 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Roma Data Pipeline"
+abstract: >-
+  A comprehensive ETL pipeline for aggregating, transforming, linking, and
+  exporting data about the ancient Roman world from multiple authoritative
+  sources including Pleiades, ORBIS, Wikidata, AWMC, Itiner-e, and ToposText.
+  Produces a unified SQLite database with 28,500+ locations, 16,500+ roads,
+  1,000+ historical figures, and pre-computed travel times across the
+  Roman Empire.
+authors:
+  - family-names: "Palaio"
+    given-names: "Thomas"
+license: MIT
+repository-code: "https://github.com/romadatapipeline/roma-data-pipeline"
+url: "https://roma-data-pipeline.readthedocs.io"
+version: 0.1.0
+date-released: 2025-01-01
+keywords:
+  - roman history
+  - ancient geography
+  - digital humanities
+  - linked open data
+  - geospatial
+  - etl
+  - pleiades
+  - orbis
+references:
+  - type: data
+    title: "Pleiades: A Gazetteer of Past Places"
+    url: "https://pleiades.stoa.org"
+    authors:
+      - name: "Pleiades Contributors"
+  - type: data
+    title: "ORBIS: The Stanford Geospatial Network Model of the Roman World"
+    url: "https://orbis.stanford.edu"
+    authors:
+      - family-names: Scheidel
+        given-names: Walter
+      - family-names: Meeks
+        given-names: Elijah
+  - type: data
+    title: "Ancient World Mapping Center Geodata"
+    url: "https://github.com/AWMC/geodata"
+    authors:
+      - name: "Ancient World Mapping Center"
+  - type: data
+    title: "ToposText"
+    url: "https://topostext.org"
+    authors:
+      - family-names: Kiesling
+        given-names: Brady

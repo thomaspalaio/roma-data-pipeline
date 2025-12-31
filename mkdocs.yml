@@ -1,0 +1,63 @@
+site_name: Roma Data Pipeline
+site_description: Comprehensive ETL for Roman world data from Pleiades, ORBIS, Wikidata, and more
+site_url: https://roma-data-pipeline.readthedocs.io
+repo_url: https://github.com/romadatapipeline/roma-data-pipeline
+repo_name: roma-data-pipeline
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - toc.follow
+    - content.code.copy
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Quick Start: quickstart.md
+  - User Guide:
+      - CLI Reference: cli-reference.md
+      - Python API: python-api.md
+      - Data Model: data-model.md
+  - Data Sources: data-sources.md
+  - Academic Use: academic-use.md
+  - Contributing: contributing.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/romadatapipeline/roma-data-pipeline

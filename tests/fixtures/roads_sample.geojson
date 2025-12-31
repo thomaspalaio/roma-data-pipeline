@@ -1,0 +1,39 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "via_appia_1",
+        "name": "Via Appia",
+        "road_type": "major",
+        "length_km": 15.5
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [12.4853, 41.8919],
+          [12.5500, 41.8500],
+          [12.6200, 41.8100]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "via_flaminia_1",
+        "name": "Via Flaminia",
+        "road_type": "major",
+        "length_km": 12.3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [12.4853, 41.8919],
+          [12.4700, 41.9500],
+          [12.4500, 42.0200]
+        ]
+      }
+    }
+  ]
+}

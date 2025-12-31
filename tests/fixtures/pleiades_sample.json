@@ -1,0 +1,56 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "423025",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.4853, 41.8919]
+      },
+      "properties": {
+        "title": "Roma",
+        "description": "Capital of the Roman Empire",
+        "featureTypes": ["urban", "settlement-modern"],
+        "timePeriodsKeys": ["archaic", "classical", "hellenistic-republican", "roman"],
+        "minDate": -750,
+        "maxDate": 640,
+        "uri": "https://pleiades.stoa.org/places/423025"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "432873",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.2681, 40.8518]
+      },
+      "properties": {
+        "title": "Pompeii",
+        "description": "Ancient Roman city destroyed by Vesuvius eruption",
+        "featureTypes": ["urban", "settlement"],
+        "timePeriodsKeys": ["archaic", "classical", "hellenistic-republican", "roman"],
+        "minDate": -600,
+        "maxDate": 79,
+        "uri": "https://pleiades.stoa.org/places/432873"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "570685",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.5134, 33.8886]
+      },
+      "properties": {
+        "title": "Berytus",
+        "description": "Ancient Phoenician city, modern Beirut",
+        "featureTypes": ["urban", "settlement-modern"],
+        "timePeriodsKeys": ["hellenistic-republican", "roman", "late-antique"],
+        "minDate": -300,
+        "maxDate": 640,
+        "uri": "https://pleiades.stoa.org/places/570685"
+      }
+    }
+  ]
+}
