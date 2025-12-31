@@ -23,7 +23,9 @@ def valid_database(tmp_path: Path) -> Path:
             type TEXT NOT NULL DEFAULT 'other',
             latitude REAL NOT NULL,
             longitude REAL NOT NULL,
-            confidence TEXT NOT NULL DEFAULT 'probable'
+            confidence TEXT NOT NULL DEFAULT 'probable',
+            description TEXT,
+            province_id TEXT
         );
 
         CREATE TABLE provinces (
@@ -62,8 +64,7 @@ def valid_database(tmp_path: Path) -> Path:
         );
 
         CREATE VIRTUAL TABLE location_search USING fts5(
-            name_latin, name_modern, type, description,
-            content='locations'
+            location_id, name_latin, name_modern, description
         );
     """)
 
@@ -98,10 +99,11 @@ def valid_database(tmp_path: Path) -> Path:
             VALUES (?, ?)
         """, (-500 + (i * 100), f"Event {i}"))
 
-    # Populate FTS
+    # Populate FTS manually (matching sqlite.py approach)
     conn.execute("""
-        INSERT INTO location_search(location_search)
-        VALUES('rebuild')
+        INSERT INTO location_search(location_id, name_latin, name_modern, description)
+        SELECT id, name_latin, COALESCE(name_modern, ''), COALESCE(description, '')
+        FROM locations
     """)
 
     conn.commit()
