@@ -9,7 +9,7 @@ from __future__ import annotations
 import csv
 import sqlite3
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from roma_data.config import Config
@@ -204,7 +204,7 @@ def _export_timeline_markers(conn: sqlite3.Connection, output: Path, verbose: bo
     return _write_csv(output, columns, cursor.fetchall())
 
 
-def _write_csv(output: Path, columns: List[str], rows: List[Any]) -> int:
+def _write_csv(output: Path, columns: list[str], rows: list[Any]) -> int:
     """Write rows to CSV file."""
     with open(output, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
@@ -215,7 +215,7 @@ def _write_csv(output: Path, columns: List[str], rows: List[Any]) -> int:
     return len(rows)
 
 
-def export_all_csv(config: "Config") -> None:
+def export_all_csv(config: Config) -> None:
     """
     Export all tables to CSV files.
 

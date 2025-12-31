@@ -8,8 +8,9 @@ This example shows how to export data to different formats:
 """
 
 from pathlib import Path
-from roma_data.export.geojson import export_geojson
+
 from roma_data.export.csv import export_csv
+from roma_data.export.geojson import export_geojson
 
 
 def main():

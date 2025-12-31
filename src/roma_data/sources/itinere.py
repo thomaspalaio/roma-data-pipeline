@@ -9,11 +9,11 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 import requests
 
-from roma_data.constants import ITINERE_DOWNLOAD_URL, ROAD_TYPE_MAP, CONFIDENCE_MAP
+from roma_data.constants import CONFIDENCE_MAP, ITINERE_DOWNLOAD_URL, ROAD_TYPE_MAP
 from roma_data.sources.base import DataSource
 
 if TYPE_CHECKING:
@@ -28,7 +28,7 @@ class ItinereSource(DataSource):
     name = "itinere"
     description = "Itiner-e Roman Road Network"
 
-    def __init__(self, config: "Config") -> None:
+    def __init__(self, config: Config) -> None:
         super().__init__(config)
         self.itinere_file = self.raw_dir / "itinere_roads.geojson"
 
@@ -49,7 +49,7 @@ class ItinereSource(DataSource):
         # Check cache
         if self.config.cache_downloads and self.itinere_file.exists():
             logger.info(f"Using cached Itiner-e data: {self.itinere_file}")
-            with open(self.itinere_file, "r", encoding="utf-8") as f:
+            with open(self.itinere_file, encoding="utf-8") as f:
                 data = json.load(f)
             return len(data.get("features", []))
 
@@ -103,7 +103,7 @@ class ItinereSource(DataSource):
             print(f"  Save as: {self.itinere_file}")
             return 0
 
-    def transform(self) -> List[Dict[str, Any]]:
+    def transform(self) -> list[dict[str, Any]]:
         """
         Transform Itiner-e road data to processed format.
 
@@ -114,11 +114,11 @@ class ItinereSource(DataSource):
             logger.info("Itiner-e data not found - skipping roads transform")
             return []
 
-        with open(self.itinere_file, "r", encoding="utf-8") as f:
+        with open(self.itinere_file, encoding="utf-8") as f:
             data = json.load(f)
 
         features = data.get("features", [])
-        roads: List[Dict[str, Any]] = []
+        roads: list[dict[str, Any]] = []
 
         for i, feature in enumerate(features):
             properties = feature.get("properties", {})

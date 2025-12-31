@@ -8,11 +8,11 @@ from __future__ import annotations
 
 import json
 import logging
-import re
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any
 
 try:
-    from SPARQLWrapper import SPARQLWrapper, JSON as SPARQL_JSON
+    from SPARQLWrapper import JSON as SPARQL_JSON
+    from SPARQLWrapper import SPARQLWrapper
 except ImportError:
     SPARQLWrapper = None
     SPARQL_JSON = None
@@ -66,7 +66,7 @@ class WikidataSource(DataSource):
     name = "wikidata"
     description = "Wikidata SPARQL queries for Roman data"
 
-    def __init__(self, config: "Config") -> None:
+    def __init__(self, config: Config) -> None:
         super().__init__(config)
         self.wikidata_dir = self.raw_dir
 
@@ -90,7 +90,7 @@ class WikidataSource(DataSource):
         emperors_path = self.wikidata_dir / "wikidata_emperors.json"
         if self.config.cache_downloads and emperors_path.exists():
             logger.info(f"Using cached: {emperors_path.name}")
-            with open(emperors_path, "r", encoding="utf-8") as f:
+            with open(emperors_path, encoding="utf-8") as f:
                 total += len(json.load(f))
         else:
             results = self._query_wikidata(WIKIDATA_EMPEROR_QUERY, "Roman Emperors")
@@ -103,7 +103,7 @@ class WikidataSource(DataSource):
         battles_path = self.wikidata_dir / "wikidata_battles.json"
         if self.config.cache_downloads and battles_path.exists():
             logger.info(f"Using cached: {battles_path.name}")
-            with open(battles_path, "r", encoding="utf-8") as f:
+            with open(battles_path, encoding="utf-8") as f:
                 total += len(json.load(f))
         else:
             results = self._query_wikidata(WIKIDATA_BATTLE_QUERY, "Roman Battles")
@@ -115,7 +115,7 @@ class WikidataSource(DataSource):
         print(f"  Downloaded: {total} Wikidata records")
         return total
 
-    def _query_wikidata(self, query: str, name: str) -> Optional[List[Dict]]:
+    def _query_wikidata(self, query: str, name: str) -> list[dict] | None:
         """Execute a SPARQL query against Wikidata."""
         try:
             sparql = SPARQLWrapper(WIKIDATA_SPARQL_ENDPOINT)
@@ -136,21 +136,21 @@ class WikidataSource(DataSource):
             print(f"  SPARQL query error: {e}")
             return None
 
-    def transform(self) -> List[Dict[str, Any]]:
+    def transform(self) -> list[dict[str, Any]]:
         """Transform is split into transform_people() and transform_events()."""
         return []
 
-    def transform_people(self) -> List[Dict[str, Any]]:
+    def transform_people(self) -> list[dict[str, Any]]:
         """Transform Wikidata people results."""
         emperors_path = self.wikidata_dir / "wikidata_emperors.json"
 
         if not emperors_path.exists():
             return []
 
-        with open(emperors_path, "r", encoding="utf-8") as f:
+        with open(emperors_path, encoding="utf-8") as f:
             emperors = json.load(f)
 
-        people: List[Dict[str, Any]] = []
+        people: list[dict[str, Any]] = []
         seen_ids: set = set()
 
         for emp in emperors:
@@ -184,17 +184,17 @@ class WikidataSource(DataSource):
         print(f"  Transformed: {len(people)} people")
         return people
 
-    def transform_events(self) -> List[Dict[str, Any]]:
+    def transform_events(self) -> list[dict[str, Any]]:
         """Transform Wikidata event results."""
         battles_path = self.wikidata_dir / "wikidata_battles.json"
 
         if not battles_path.exists():
             return []
 
-        with open(battles_path, "r", encoding="utf-8") as f:
+        with open(battles_path, encoding="utf-8") as f:
             battles = json.load(f)
 
-        events: List[Dict[str, Any]] = []
+        events: list[dict[str, Any]] = []
         seen_ids: set = set()
 
         for battle in battles:

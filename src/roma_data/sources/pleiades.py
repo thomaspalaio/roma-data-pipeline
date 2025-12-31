@@ -11,8 +11,7 @@ import json
 import logging
 import re
 import shutil
-from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
+from typing import TYPE_CHECKING, Any
 
 import requests
 from tqdm import tqdm
@@ -40,7 +39,7 @@ class PleiadesSource(DataSource):
     name = "pleiades"
     description = "Pleiades Gazetteer of Ancient Places"
 
-    def __init__(self, config: "Config") -> None:
+    def __init__(self, config: Config) -> None:
         super().__init__(config)
 
     def download(self) -> int:
@@ -57,13 +56,13 @@ class PleiadesSource(DataSource):
         # Check cache
         if self.config.cache_downloads and output_path.exists():
             logger.info(f"Using cached Pleiades data: {output_path}")
-            with open(output_path, "r", encoding="utf-8") as f:
+            with open(output_path, encoding="utf-8") as f:
                 data = json.load(f)
             places = data.get("@graph", data) if isinstance(data, dict) else data
             return len(places)
 
         logger.info(f"Downloading Pleiades from {PLEIADES_JSON_URL}")
-        print(f"  Downloading Pleiades JSON dump...")
+        print("  Downloading Pleiades JSON dump...")
 
         # Download with progress bar
         response = requests.get(PLEIADES_JSON_URL, stream=True, timeout=120)
@@ -87,7 +86,7 @@ class PleiadesSource(DataSource):
         gz_path.unlink()
 
         # Count places
-        with open(output_path, "r", encoding="utf-8") as f:
+        with open(output_path, encoding="utf-8") as f:
             data = json.load(f)
 
         places = data.get("@graph", data) if isinstance(data, dict) else data
@@ -96,7 +95,7 @@ class PleiadesSource(DataSource):
 
         return len(places)
 
-    def transform(self) -> List[Dict[str, Any]]:
+    def transform(self) -> list[dict[str, Any]]:
         """
         Transform Pleiades data to processed format.
 
@@ -109,7 +108,7 @@ class PleiadesSource(DataSource):
             raise FileNotFoundError(f"Pleiades data not found: {input_path}. Run download first.")
 
         print("  Loading Pleiades JSON...")
-        with open(input_path, "r", encoding="utf-8") as f:
+        with open(input_path, encoding="utf-8") as f:
             data = json.load(f)
 
         places = data.get("@graph", data) if isinstance(data, dict) else data
@@ -200,7 +199,7 @@ class PleiadesSource(DataSource):
 
         return transformed
 
-    def _has_valid_coordinates(self, place: Dict[str, Any]) -> bool:
+    def _has_valid_coordinates(self, place: dict[str, Any]) -> bool:
         """Check if a place has valid coordinates."""
         repr_point = place.get("reprPoint")
         if repr_point and len(repr_point) >= 2:
@@ -210,7 +209,7 @@ class PleiadesSource(DataSource):
                     return True
         return False
 
-    def _is_roman_period(self, place: Dict[str, Any]) -> bool:
+    def _is_roman_period(self, place: dict[str, Any]) -> bool:
         """Check if a place existed during the Roman period."""
         # Check attestations in locations
         locations = place.get("locations", []) or []
@@ -260,10 +259,10 @@ class PleiadesSource(DataSource):
 
         return False
 
-    def _extract_temporal_bounds(self, place: Dict[str, Any]) -> Tuple[Optional[int], Optional[int]]:
+    def _extract_temporal_bounds(self, place: dict[str, Any]) -> tuple[int | None, int | None]:
         """Extract founding and destruction years from temporal attestations."""
-        min_year: Optional[int] = None
-        max_year: Optional[int] = None
+        min_year: int | None = None
+        max_year: int | None = None
 
         # Strategy 1: Use explicit minDate/maxDate
         min_date = place.get("minDate")
@@ -286,7 +285,7 @@ class PleiadesSource(DataSource):
 
         # Strategy 2: Extract from time period attestations
         locations = place.get("locations", []) or []
-        all_periods: List[str] = []
+        all_periods: list[str] = []
 
         for loc in locations:
             if not isinstance(loc, dict):
@@ -310,7 +309,7 @@ class PleiadesSource(DataSource):
 
         return (min_year, max_year)
 
-    def _get_best_latin_name(self, place: Dict[str, Any]) -> str:
+    def _get_best_latin_name(self, place: dict[str, Any]) -> str:
         """Extract the best Latin name from a Pleiades place."""
         names = place.get("names", []) or []
 
@@ -332,7 +331,7 @@ class PleiadesSource(DataSource):
 
         return place.get("title", "Unknown")
 
-    def _get_modern_name(self, place: Dict[str, Any]) -> Optional[str]:
+    def _get_modern_name(self, place: dict[str, Any]) -> str | None:
         """Extract the modern name from a Pleiades place."""
         names = place.get("names", []) or []
 
@@ -345,7 +344,7 @@ class PleiadesSource(DataSource):
 
         return None
 
-    def _map_place_type(self, place: Dict[str, Any]) -> str:
+    def _map_place_type(self, place: dict[str, Any]) -> str:
         """Map Pleiades place types to app location type."""
         place_types = place.get("placeTypes", []) or []
 
@@ -356,7 +355,7 @@ class PleiadesSource(DataSource):
 
         return LOCATION_TYPE_MAP.get("default", "other")
 
-    def _map_confidence(self, place: Dict[str, Any]) -> str:
+    def _map_confidence(self, place: dict[str, Any]) -> str:
         """Map Pleiades location precision to app confidence."""
         locations = place.get("locations", []) or []
 
@@ -371,7 +370,7 @@ class PleiadesSource(DataSource):
 
         return CONFIDENCE_MAP.get("default", "probable")
 
-    def _extract_barrington_ref(self, place: Dict[str, Any]) -> Optional[str]:
+    def _extract_barrington_ref(self, place: dict[str, Any]) -> str | None:
         """Extract Barrington Atlas reference from Pleiades references."""
         references = place.get("references", []) or []
 

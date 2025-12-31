@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from roma_data.config import Config
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def transform_events(config: "Config") -> int:
+def transform_events(config: Config) -> int:
     """
     Transform event data from Wikidata source.
 
@@ -26,7 +26,7 @@ def transform_events(config: "Config") -> int:
     Returns:
         Number of events written.
     """
-    all_events: List[Dict[str, Any]] = []
+    all_events: list[dict[str, Any]] = []
 
     processed_dir = config.output_dir / "processed"
     processed_dir.mkdir(parents=True, exist_ok=True)

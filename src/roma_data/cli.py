@@ -199,7 +199,7 @@ def run(
         pipeline = Pipeline(config)
         db_path = pipeline.run()
 
-        console.print(f"\n[bold green]Pipeline complete![/bold green]")
+        console.print("\n[bold green]Pipeline complete![/bold green]")
         console.print(f"Database: {db_path}")
         console.print(f"Size: {db_path.stat().st_size / (1024 * 1024):.2f} MB")
 

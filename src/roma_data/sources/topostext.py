@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import logging
 import re
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any
 
 import requests
 
@@ -35,7 +35,7 @@ class ToposTextSource(DataSource):
     name = "topostext"
     description = "ToposText Ancient Place Citations"
 
-    def __init__(self, config: "Config") -> None:
+    def __init__(self, config: Config) -> None:
         super().__init__(config)
         self.places_file = self.raw_dir / "topostext_places.geojson"
 
@@ -51,7 +51,7 @@ class ToposTextSource(DataSource):
         # Check cache
         if self.config.cache_downloads and self.places_file.exists():
             logger.info(f"Using cached ToposText data: {self.places_file}")
-            with open(self.places_file, "r", encoding="utf-8") as f:
+            with open(self.places_file, encoding="utf-8") as f:
                 data = json.load(f)
             count = len(data.get("features", []))
             print(f"  Using cached: {count} ToposText places")
@@ -79,7 +79,7 @@ class ToposTextSource(DataSource):
             print(f"  ToposText JSON parse error: {e}")
             return 0
 
-    def transform(self) -> List[Dict[str, Any]]:
+    def transform(self) -> list[dict[str, Any]]:
         """
         Transform ToposText places to location records.
 
@@ -92,10 +92,10 @@ class ToposTextSource(DataSource):
         if not self.places_file.exists():
             return []
 
-        with open(self.places_file, "r", encoding="utf-8") as f:
+        with open(self.places_file, encoding="utf-8") as f:
             data = json.load(f)
 
-        locations: List[Dict[str, Any]] = []
+        locations: list[dict[str, Any]] = []
         features = data.get("features", [])
 
         for feature in features:
@@ -168,7 +168,7 @@ class ToposTextSource(DataSource):
         print(f"  Transformed: {len(locations)} ToposText locations")
         return locations
 
-    def transform_citations(self) -> List[Dict[str, Any]]:
+    def transform_citations(self) -> list[dict[str, Any]]:
         """
         Extract citation counts from ToposText places.
 
@@ -181,10 +181,10 @@ class ToposTextSource(DataSource):
         if not self.places_file.exists():
             return []
 
-        with open(self.places_file, "r", encoding="utf-8") as f:
+        with open(self.places_file, encoding="utf-8") as f:
             data = json.load(f)
 
-        citations: List[Dict[str, Any]] = []
+        citations: list[dict[str, Any]] = []
         features = data.get("features", [])
 
         for feature in features:
@@ -219,7 +219,7 @@ class ToposTextSource(DataSource):
         print(f"  Transformed: {len(citations)} ToposText citations")
         return citations
 
-    def _extract_id(self, url: str) -> Optional[str]:
+    def _extract_id(self, url: str) -> str | None:
         """Extract ToposText ID from URL."""
         if not url:
             return None

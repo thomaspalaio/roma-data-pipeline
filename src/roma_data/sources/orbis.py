@@ -14,13 +14,12 @@ References:
 from __future__ import annotations
 
 import csv
-import io
 import logging
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import TYPE_CHECKING, Any
 
 import requests
 
-from roma_data.constants import ORBIS_SITES_URL, ORBIS_EDGES_URL, TRAVEL_SPEEDS
+from roma_data.constants import ORBIS_EDGES_URL, ORBIS_SITES_URL, TRAVEL_SPEEDS
 from roma_data.sources.base import DataSource
 
 if TYPE_CHECKING:
@@ -35,7 +34,7 @@ class ORBISSource(DataSource):
     name = "orbis"
     description = "ORBIS Stanford Travel Network Model"
 
-    def __init__(self, config: "Config") -> None:
+    def __init__(self, config: Config) -> None:
         super().__init__(config)
         self.sites_file = self.raw_dir / "orbis_sites.csv"
         self.edges_file = self.raw_dir / "orbis_edges.csv"
@@ -54,7 +53,7 @@ class ORBISSource(DataSource):
         # Download sites CSV
         if self.config.cache_downloads and self.sites_file.exists():
             logger.info(f"Using cached: {self.sites_file.name}")
-            with open(self.sites_file, "r", encoding="utf-8") as f:
+            with open(self.sites_file, encoding="utf-8") as f:
                 total += sum(1 for _ in f) - 1  # Subtract header
         else:
             print("  Downloading ORBIS sites...")
@@ -72,7 +71,7 @@ class ORBISSource(DataSource):
         # Download edges CSV
         if self.config.cache_downloads and self.edges_file.exists():
             logger.info(f"Using cached: {self.edges_file.name}")
-            with open(self.edges_file, "r", encoding="utf-8") as f:
+            with open(self.edges_file, encoding="utf-8") as f:
                 edges_count = sum(1 for _ in f) - 1
                 total += edges_count
         else:
@@ -92,7 +91,7 @@ class ORBISSource(DataSource):
         print(f"  Downloaded: {total} ORBIS records")
         return total
 
-    def transform(self) -> List[Dict[str, Any]]:
+    def transform(self) -> list[dict[str, Any]]:
         """
         Transform ORBIS sites to location records.
 
@@ -102,10 +101,10 @@ class ORBISSource(DataSource):
         if not self.sites_file.exists():
             return []
 
-        locations: List[Dict[str, Any]] = []
-        site_names: Dict[int, str] = {}  # Store for edge lookup
+        locations: list[dict[str, Any]] = []
+        site_names: dict[int, str] = {}  # Store for edge lookup
 
-        with open(self.sites_file, "r", encoding="utf-8") as f:
+        with open(self.sites_file, encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 site_id = row.get("id", "").strip('"')
@@ -159,7 +158,7 @@ class ORBISSource(DataSource):
         print(f"  Transformed: {len(locations)} ORBIS locations")
         return locations
 
-    def transform_travel_network(self) -> List[Dict[str, Any]]:
+    def transform_travel_network(self) -> list[dict[str, Any]]:
         """
         Transform ORBIS edges to travel network records.
 
@@ -173,9 +172,9 @@ class ORBISSource(DataSource):
         if not hasattr(self, "_site_names"):
             self.transform()  # This populates _site_names
 
-        edges: List[Dict[str, Any]] = []
+        edges: list[dict[str, Any]] = []
 
-        with open(self.edges_file, "r", encoding="utf-8") as f:
+        with open(self.edges_file, encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for i, row in enumerate(reader):
                 source_id = row.get("source", "").strip('"')

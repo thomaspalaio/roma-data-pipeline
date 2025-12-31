@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from roma_data.config import Config
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def transform_provinces(config: "Config") -> int:
+def transform_provinces(config: Config) -> int:
     """
     Transform province data from AWMC source.
 
@@ -26,7 +26,7 @@ def transform_provinces(config: "Config") -> int:
     Returns:
         Number of provinces written.
     """
-    all_provinces: List[Dict[str, Any]] = []
+    all_provinces: list[dict[str, Any]] = []
 
     processed_dir = config.output_dir / "processed"
     processed_dir.mkdir(parents=True, exist_ok=True)

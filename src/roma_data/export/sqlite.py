@@ -10,7 +10,7 @@ import json
 import logging
 import sqlite3
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 from roma_data.constants import (
     CREATE_TABLES_SQL,
@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 class SQLiteExporter:
     """Exports processed data to SQLite database."""
 
-    def __init__(self, config: "Config") -> None:
+    def __init__(self, config: Config) -> None:
         self.config = config
         self.processed_dir = config.output_dir / "processed"
 
@@ -104,14 +104,14 @@ class SQLiteExporter:
 
         return conn
 
-    def _load_json(self, filename: str) -> List[Dict[str, Any]]:
+    def _load_json(self, filename: str) -> list[dict[str, Any]]:
         """Load JSON data from processed directory."""
         path = self.processed_dir / filename
         if not path.exists():
             logger.debug(f"File not found: {path}")
             return []
 
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
 
     def _insert_locations(self, conn: sqlite3.Connection) -> int:
@@ -621,7 +621,7 @@ class SQLiteExporter:
         conn.execute("VACUUM")
 
 
-def export_to_sqlite(config: "Config", output_path: Path | None = None) -> Path:
+def export_to_sqlite(config: Config, output_path: Path | None = None) -> Path:
     """
     Convenience function to export data to SQLite.
 

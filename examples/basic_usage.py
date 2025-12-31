@@ -9,7 +9,8 @@ This example shows how to:
 """
 
 from pathlib import Path
-from roma_data import Pipeline, Config
+
+from roma_data import Config, Pipeline
 
 
 def main():

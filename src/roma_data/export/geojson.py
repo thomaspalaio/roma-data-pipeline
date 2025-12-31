@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import sqlite3
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from roma_data.config import Config
@@ -73,7 +73,7 @@ def export_geojson(
     return len(features)
 
 
-def _export_locations(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str, Any]]:
+def _export_locations(conn: sqlite3.Connection, verbose: bool) -> list[dict[str, Any]]:
     """Export locations as GeoJSON Point features."""
     cursor = conn.cursor()
     cursor.execute("""
@@ -111,7 +111,7 @@ def _export_locations(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str,
     return features
 
 
-def _export_provinces(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str, Any]]:
+def _export_provinces(conn: sqlite3.Connection, verbose: bool) -> list[dict[str, Any]]:
     """Export provinces as GeoJSON features with polygon geometry."""
     cursor = conn.cursor()
     cursor.execute("""
@@ -159,7 +159,7 @@ def _export_provinces(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str,
     return features
 
 
-def _export_roads(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str, Any]]:
+def _export_roads(conn: sqlite3.Connection, verbose: bool) -> list[dict[str, Any]]:
     """Export roads as GeoJSON LineString features."""
     cursor = conn.cursor()
     cursor.execute("""
@@ -195,7 +195,7 @@ def _export_roads(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str, Any
     return features
 
 
-def _export_people(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str, Any]]:
+def _export_people(conn: sqlite3.Connection, verbose: bool) -> list[dict[str, Any]]:
     """Export people as GeoJSON features (with birth/death locations if available)."""
     cursor = conn.cursor()
     cursor.execute("""
@@ -244,7 +244,7 @@ def _export_people(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str, An
     return features
 
 
-def _export_events(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str, Any]]:
+def _export_events(conn: sqlite3.Connection, verbose: bool) -> list[dict[str, Any]]:
     """Export events as GeoJSON features."""
     cursor = conn.cursor()
     cursor.execute("""
@@ -285,7 +285,7 @@ def _export_events(conn: sqlite3.Connection, verbose: bool) -> List[Dict[str, An
     return features
 
 
-def export_all_geojson(config: "Config") -> None:
+def export_all_geojson(config: Config) -> None:
     """
     Export all tables to GeoJSON files.
 

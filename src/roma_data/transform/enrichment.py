@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from roma_data.config import Config
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def enrich_all(config: "Config") -> None:
+def enrich_all(config: Config) -> None:
     """
     Enrich data with cross-entity links.
 
@@ -46,7 +46,7 @@ def enrich_all(config: "Config") -> None:
         print("  Enriching locations with province data...")
         locations = _assign_provinces(locations, provinces)
         _save_json(processed_dir / "locations.json", locations)
-        print(f"    Assigned provinces to locations")
+        print("    Assigned provinces to locations")
 
     # Create empty junction tables (will be populated by future enrichment)
     _save_json(processed_dir / "road_cities.json", [])
@@ -57,24 +57,24 @@ def enrich_all(config: "Config") -> None:
     logger.info("Enrichment complete")
 
 
-def _load_json(path: Path) -> List[Dict[str, Any]]:
+def _load_json(path: Path) -> list[dict[str, Any]]:
     """Load JSON file, return empty list if not found."""
     if not path.exists():
         return []
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
-def _save_json(path: Path, data: List[Dict[str, Any]]) -> None:
+def _save_json(path: Path, data: list[dict[str, Any]]) -> None:
     """Save data to JSON file."""
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 
 def _assign_provinces(
-    locations: List[Dict[str, Any]],
-    provinces: List[Dict[str, Any]],
-) -> List[Dict[str, Any]]:
+    locations: list[dict[str, Any]],
+    provinces: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
     """
     Assign province IDs to locations based on coordinates.
 
@@ -82,7 +82,7 @@ def _assign_provinces(
     A full implementation would use shapely for point-in-polygon tests.
     """
     # Build province centroids
-    province_centroids: List[tuple[str, float, float]] = []
+    province_centroids: list[tuple[str, float, float]] = []
     for prov in provinces:
         if prov.get("centroid_lat") and prov.get("centroid_lon"):
             province_centroids.append((

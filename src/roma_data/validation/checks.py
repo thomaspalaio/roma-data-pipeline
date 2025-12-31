@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import sqlite3
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 from rich.console import Console
 from rich.table import Table
@@ -20,7 +20,7 @@ from rich.table import Table
 console = Console()
 
 
-def validate_database(database: Path, verbose: bool = False) -> Dict[str, Any]:
+def validate_database(database: Path, verbose: bool = False) -> dict[str, Any]:
     """
     Validate a Roma Data Pipeline database.
 
@@ -34,7 +34,7 @@ def validate_database(database: Path, verbose: bool = False) -> Dict[str, Any]:
     if not database.exists():
         return {"overall_passed": False, "error": f"Database not found: {database}"}
 
-    results: Dict[str, Any] = {
+    results: dict[str, Any] = {
         "overall_passed": True,
         "checks": {},
         "warnings": [],
@@ -87,7 +87,7 @@ def validate_database(database: Path, verbose: bool = False) -> Dict[str, Any]:
     return results
 
 
-def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, Dict]:
+def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
     """Check that all required tables exist and have data."""
     required_tables = {
         "locations": 1000,  # Minimum expected
@@ -99,7 +99,7 @@ def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, 
 
     optional_tables = ["events", "travel_network", "ancient_sources"]
 
-    details: Dict[str, Any] = {"tables": {}}
+    details: dict[str, Any] = {"tables": {}}
     passed = True
 
     cursor = conn.cursor()
@@ -130,11 +130,11 @@ def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, 
     return passed, details
 
 
-def _check_coordinates(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, Dict]:
+def _check_coordinates(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
     """Check that coordinates are valid."""
     cursor = conn.cursor()
 
-    details: Dict[str, Any] = {}
+    details: dict[str, Any] = {}
     passed = True
 
     # Check locations
@@ -175,11 +175,11 @@ def _check_coordinates(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, D
     return passed, details
 
 
-def _check_required_fields(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, Dict]:
+def _check_required_fields(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
     """Check that required fields are populated."""
     cursor = conn.cursor()
 
-    details: Dict[str, Any] = {}
+    details: dict[str, Any] = {}
     passed = True
 
     # Check locations have IDs and names
@@ -220,11 +220,11 @@ def _check_required_fields(conn: sqlite3.Connection, verbose: bool) -> Tuple[boo
     return passed, details
 
 
-def _check_fts_indexes(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, Dict]:
+def _check_fts_indexes(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
     """Check that FTS indexes are working."""
     cursor = conn.cursor()
 
-    details: Dict[str, Any] = {}
+    details: dict[str, Any] = {}
     passed = True
 
     # Test location_search
@@ -253,11 +253,11 @@ def _check_fts_indexes(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, D
     return passed, details
 
 
-def _check_data_ranges(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, Dict]:
+def _check_data_ranges(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
     """Check that data values are in expected ranges."""
     cursor = conn.cursor()
 
-    details: Dict[str, Any] = {}
+    details: dict[str, Any] = {}
     passed = True
 
     # Check year ranges for people
@@ -304,11 +304,11 @@ def _check_data_ranges(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, D
     return passed, details
 
 
-def _check_foreign_keys(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, Dict]:
+def _check_foreign_keys(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, dict]:
     """Check foreign key relationships (soft check)."""
     cursor = conn.cursor()
 
-    details: Dict[str, Any] = {}
+    details: dict[str, Any] = {}
     passed = True
 
     # Check province_id references in locations
@@ -327,7 +327,7 @@ def _check_foreign_keys(conn: sqlite3.Connection, verbose: bool) -> Tuple[bool, 
     return passed, details
 
 
-def _print_results(results: Dict[str, Any]) -> None:
+def _print_results(results: dict[str, Any]) -> None:
     """Print validation results in a formatted table."""
     table = Table(title="Validation Results")
     table.add_column("Check", style="cyan")

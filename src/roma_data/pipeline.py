@@ -143,11 +143,11 @@ class Pipeline:
         """Transform raw data to processed format."""
         results: dict[str, int] = {}
 
+        from roma_data.transform.events import transform_events
         from roma_data.transform.locations import transform_locations
+        from roma_data.transform.people import transform_people
         from roma_data.transform.provinces import transform_provinces
         from roma_data.transform.roads import transform_roads
-        from roma_data.transform.people import transform_people
-        from roma_data.transform.events import transform_events
 
         results["locations"] = transform_locations(self.config)
         results["provinces"] = transform_provinces(self.config)

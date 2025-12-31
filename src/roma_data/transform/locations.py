@@ -8,8 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
-from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from roma_data.config import Config
@@ -17,7 +16,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def transform_locations(config: "Config") -> int:
+def transform_locations(config: Config) -> int:
     """
     Transform and aggregate location data from all enabled sources.
 
@@ -30,7 +29,7 @@ def transform_locations(config: "Config") -> int:
     Returns:
         Number of locations written.
     """
-    all_locations: List[Dict[str, Any]] = []
+    all_locations: list[dict[str, Any]] = []
     seen_ids: set[str] = set()
 
     processed_dir = config.output_dir / "processed"
@@ -95,7 +94,7 @@ def transform_locations(config: "Config") -> int:
     return len(all_locations)
 
 
-def deduplicate_locations(locations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def deduplicate_locations(locations: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """
     Deduplicate locations by coordinates and name.
 
@@ -109,7 +108,7 @@ def deduplicate_locations(locations: List[Dict[str, Any]]) -> List[Dict[str, Any
         Deduplicated list of locations.
     """
     # Simple deduplication by ID for now
-    seen: Dict[str, Dict[str, Any]] = {}
+    seen: dict[str, dict[str, Any]] = {}
 
     for loc in locations:
         loc_id = loc["id"]

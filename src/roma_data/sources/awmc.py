@@ -8,10 +8,8 @@ from __future__ import annotations
 
 import json
 import logging
-import math
 import re
-from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
+from typing import TYPE_CHECKING, Any
 
 import requests
 
@@ -24,7 +22,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 # Province era ranges for temporal data
-PROVINCE_ERA_RANGES: Dict[str, Dict[str, Any]] = {
+PROVINCE_ERA_RANGES: dict[str, dict[str, Any]] = {
     "roman_empire_bce_60": {
         "name": "Republican Era",
         "start_year": -200,
@@ -54,7 +52,7 @@ class AWMCSource(DataSource):
     name = "awmc"
     description = "Ancient World Mapping Center Province Boundaries"
 
-    def __init__(self, config: "Config") -> None:
+    def __init__(self, config: Config) -> None:
         super().__init__(config)
         self.awmc_dir = self.raw_dir / "awmc"
 
@@ -96,16 +94,16 @@ class AWMCSource(DataSource):
         print(f"  Downloaded: {downloaded} AWMC province files")
         return downloaded
 
-    def transform(self) -> List[Dict[str, Any]]:
+    def transform(self) -> list[dict[str, Any]]:
         """
         Transform AWMC province boundaries to processed format.
 
         Returns:
             List of province records.
         """
-        provinces: List[Dict[str, Any]] = []
+        provinces: list[dict[str, Any]] = []
         color_index = 0
-        name_counter: Dict[str, int] = {}
+        name_counter: dict[str, int] = {}
 
         for era_name, era_info in PROVINCE_ERA_RANGES.items():
             geojson_path = self.awmc_dir / f"awmc_{era_name}.geojson"
@@ -116,7 +114,7 @@ class AWMCSource(DataSource):
 
             print(f"  Processing: {era_name}")
 
-            with open(geojson_path, "r", encoding="utf-8") as f:
+            with open(geojson_path, encoding="utf-8") as f:
                 geojson = json.load(f)
 
             features = geojson.get("features", [])
@@ -171,11 +169,11 @@ class AWMCSource(DataSource):
 
     def _calculate_centroid(
         self,
-        coords: List,
+        coords: list,
         geom_type: str,
-    ) -> Optional[Tuple[float, float]]:
+    ) -> tuple[float, float] | None:
         """Calculate the centroid of a polygon or multipolygon."""
-        all_points: List[Tuple[float, float]] = []
+        all_points: list[tuple[float, float]] = []
 
         if geom_type == "Polygon":
             # Polygon: [ring1, ring2, ...] where each ring is [[lon, lat], ...]

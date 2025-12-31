@@ -6,10 +6,10 @@ This example demonstrates how to use the travel network data
 to calculate travel times between Roman cities.
 """
 
-import sqlite3
-from pathlib import Path
-from collections import defaultdict
 import heapq
+import sqlite3
+from collections import defaultdict
+from pathlib import Path
 
 
 def load_network(db_path: Path) -> dict:
