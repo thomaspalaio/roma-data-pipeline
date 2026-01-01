@@ -150,7 +150,7 @@ class WikidataSource(DataSource):
             return None
         except TimeoutError as e:
             logger.warning(f"Wikidata timeout for {name}: {e}")
-            print(f"  Wikidata query timeout")
+            print("  Wikidata query timeout")
             return None
         except ValueError as e:
             logger.warning(f"Invalid SPARQL response for {name}: {e}")
