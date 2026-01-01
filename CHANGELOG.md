@@ -5,6 +5,20 @@ All notable changes to Roma Data Pipeline will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2026-01-01
+
+### Fixed
+
+- Fixed PyPI metadata links pointing to wrong GitHub repository
+- Fixed LICENSE-DATA with correct licenses for AWMC (CC-BY-NC-3.0) and ToposText (CC-BY-NC-SA-4.0)
+- Fixed CLI `roma-data info` output with correct licenses and record counts
+- Fixed location count in CLI help (was 28,500+, now 35,000+)
+- Added `python -m roma_data` fallback instructions to README for PATH issues
+- Removed broken ReadTheDocs documentation link
+- Removed Docker installation claim (image not yet published)
+- Fixed GitHub URLs in CONTRIBUTING.md
+- Removed duplicate docs/contributing.md file
+
 ## [0.1.0] - 2025-12-31
 
 ### Added
@@ -35,4 +49,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - GitHub Actions CI/CD pipeline
 - PyPI package distribution
 
+[0.1.1]: https://github.com/thomaspalaio/roma-data-pipeline/releases/tag/v0.1.1
 [0.1.0]: https://github.com/thomaspalaio/roma-data-pipeline/releases/tag/v0.1.0

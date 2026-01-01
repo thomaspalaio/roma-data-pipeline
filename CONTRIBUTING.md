@@ -14,7 +14,7 @@ Thank you for your interest in contributing! This document provides guidelines f
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/romadatapipeline/roma-data-pipeline
+   git clone https://github.com/thomaspalaio/roma-data-pipeline
    cd roma-data-pipeline
    ```
 

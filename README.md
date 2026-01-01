@@ -15,6 +15,8 @@
 ```bash
 pip install roma-data-pipeline
 roma-data run
+# Or if roma-data isn't in your PATH:
+python -m roma_data run
 ```
 
 This creates `roma_aeterna.sqlite` in your current directory (~50 MB).
@@ -54,12 +56,6 @@ pip install roma-data-pipeline
 git clone https://github.com/thomaspalaio/roma-data-pipeline
 cd roma-data-pipeline
 pip install -e ".[dev]"
-```
-
-### Docker
-
-```bash
-docker run -v $(pwd):/output ghcr.io/thomaspalaio/roma-data-pipeline
 ```
 
 ## Usage
@@ -220,7 +216,6 @@ This project builds on the work of many scholars and institutions:
 
 ## Links
 
-- [Documentation](https://roma-data-pipeline.readthedocs.io)
 - [PyPI Package](https://pypi.org/project/roma-data-pipeline/)
 - [Issue Tracker](https://github.com/thomaspalaio/roma-data-pipeline/issues)
 - [Changelog](CHANGELOG.md)

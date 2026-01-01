@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "roma-data-pipeline"
-version = "0.1.0"
+version = "0.1.1"
 description = "Comprehensive ETL pipeline for Roman world data from Pleiades, ORBIS, Wikidata, and more"
 readme = "README.md"
 license = "MIT"
@@ -67,10 +67,10 @@ docs = [
 roma-data = "roma_data.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/romadatapipeline/roma-data-pipeline"
-Documentation = "https://roma-data-pipeline.readthedocs.io"
-Repository = "https://github.com/romadatapipeline/roma-data-pipeline"
-Issues = "https://github.com/romadatapipeline/roma-data-pipeline/issues"
+Homepage = "https://github.com/thomaspalaio/roma-data-pipeline"
+Documentation = "https://github.com/thomaspalaio/roma-data-pipeline#readme"
+Repository = "https://github.com/thomaspalaio/roma-data-pipeline"
+Issues = "https://github.com/thomaspalaio/roma-data-pipeline/issues"
 
 [tool.hatch.build.targets.sdist]
 include = [

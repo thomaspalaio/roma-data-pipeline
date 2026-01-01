@@ -60,8 +60,8 @@ def main(ctx: click.Context, verbose: bool) -> None:
     """
     Roma Data Pipeline - Comprehensive Roman World Dataset Generator
 
-    Generate a unified SQLite database containing 28,500+ locations, 16,500+ roads,
-    1,000+ historical figures, and pre-computed travel times across the Roman Empire.
+    Generate a unified SQLite database containing 35,000+ locations, 16,500+ roads,
+    100+ historical figures, and pre-computed travel times across the Roman Empire.
 
     Data sources: Pleiades, AWMC, Itiner-e, Wikidata, ORBIS, ToposText
     """
@@ -257,12 +257,12 @@ def info(ctx: click.Context) -> None:
     table.add_column("Records", justify="right")
 
     sources = [
-        ("pleiades", "Ancient place gazetteer", "CC-BY 3.0", "~28,500"),
-        ("awmc", "Province boundaries (4 time periods)", "CC-BY 3.0", "~100"),
-        ("itinere", "Roman road network", "Academic", "~16,500"),
-        ("wikidata", "People, events, infrastructure", "CC0", "~2,000"),
-        ("orbis", "Travel network (times/costs)", "CC-BY", "~600"),
-        ("topostext", "Ancient text citations", "ODbL", "~3,000"),
+        ("pleiades", "Ancient place gazetteer", "CC-BY-3.0", "~35,000"),
+        ("awmc", "Province boundaries (4 time periods)", "CC-BY-NC-3.0", "~186"),
+        ("itinere", "Roman road network", "Open", "~16,500"),
+        ("wikidata", "People, events, infrastructure", "CC0", "~100"),
+        ("orbis", "Travel network (times/costs)", "Open", "~2,200"),
+        ("topostext", "Ancient text citations", "CC-BY-NC-SA-4.0", "~8,000"),
     ]
 
     for name, desc, license_, records in sources:
@@ -271,7 +271,7 @@ def info(ctx: click.Context) -> None:
     console.print()
     console.print(table)
     console.print()
-    console.print("[dim]For more information, see: https://roma-data-pipeline.readthedocs.io[/dim]")
+    console.print("[dim]For more information, see: https://github.com/thomaspalaio/roma-data-pipeline[/dim]")
 
 
 @main.command()
