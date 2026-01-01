@@ -119,6 +119,8 @@ class WikidataSource(DataSource):
 
     def _query_wikidata(self, query: str, name: str) -> list[dict[str, Any]] | None:
         """Execute a SPARQL query against Wikidata."""
+        import urllib.error
+
         try:
             sparql = SPARQLWrapper(WIKIDATA_SPARQL_ENDPOINT)
             sparql.setQuery(query)
@@ -134,12 +136,25 @@ class WikidataSource(DataSource):
                 print(f"  Found {len(bindings)} results")
                 return bindings
             else:
+                logger.warning(f"Unexpected SPARQL response format for {name}")
                 print("  Unexpected SPARQL response format")
                 return None
 
-        except Exception as e:
-            logger.warning(f"SPARQL query error: {e}")
-            print(f"  SPARQL query error: {e}")
+        except urllib.error.HTTPError as e:
+            logger.warning(f"Wikidata HTTP error for {name}: {e.code} {e.reason}")
+            print(f"  Wikidata HTTP error: {e.code} {e.reason}")
+            return None
+        except urllib.error.URLError as e:
+            logger.warning(f"Wikidata connection error for {name}: {e.reason}")
+            print(f"  Wikidata connection error: {e.reason}")
+            return None
+        except TimeoutError as e:
+            logger.warning(f"Wikidata timeout for {name}: {e}")
+            print(f"  Wikidata query timeout")
+            return None
+        except ValueError as e:
+            logger.warning(f"Invalid SPARQL response for {name}: {e}")
+            print(f"  Invalid SPARQL response: {e}")
             return None
 
     def transform(self) -> list[dict[str, Any]]:

@@ -16,14 +16,14 @@ If you use this software, please cite:
   title        = {Roma Data Pipeline: Comprehensive ETL for Roman World Data},
   year         = {2025},
   publisher    = {GitHub},
-  url          = {https://github.com/romadatapipeline/roma-data-pipeline},
-  version      = {1.0.0}
+  url          = {https://github.com/thomaspalaio/roma-data-pipeline},
+  version      = {0.1.0}
 }
 ```
 
 **APA:**
 
-> Roma Data Pipeline Contributors. (2025). Roma Data Pipeline: Comprehensive ETL for Roman World Data (Version 1.0.0) [Computer software]. https://github.com/romadatapipeline/roma-data-pipeline
+> Roma Data Pipeline Contributors. (2025). Roma Data Pipeline: Comprehensive ETL for Roman World Data (Version 0.1.0) [Computer software]. https://github.com/thomaspalaio/roma-data-pipeline
 
 ### Data Source Citations
 

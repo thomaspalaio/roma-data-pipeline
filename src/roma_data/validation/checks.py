@@ -99,6 +99,9 @@ def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, 
 
     optional_tables = ["events", "travel_network", "ancient_sources"]
 
+    # Whitelist of allowed table names for security
+    allowed_tables = frozenset(required_tables.keys()) | frozenset(optional_tables)
+
     details: dict[str, Any] = {"tables": {}}
     passed = True
 
@@ -106,8 +109,11 @@ def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, 
 
     # Check required tables
     for table, min_count in required_tables.items():
+        if table not in allowed_tables:
+            continue  # Skip unknown tables
         try:
-            cursor.execute(f"SELECT COUNT(*) FROM {table}")
+            # Use parameterized query pattern - table names validated via whitelist
+            cursor.execute(f"SELECT COUNT(*) FROM [{table}]")
             count = cursor.fetchone()[0]
             details["tables"][table] = count
             if count < min_count:
@@ -120,8 +126,10 @@ def _check_table_counts(conn: sqlite3.Connection, verbose: bool) -> tuple[bool, 
 
     # Check optional tables (don't fail if missing)
     for table in optional_tables:
+        if table not in allowed_tables:
+            continue  # Skip unknown tables
         try:
-            cursor.execute(f"SELECT COUNT(*) FROM {table}")
+            cursor.execute(f"SELECT COUNT(*) FROM [{table}]")
             count = cursor.fetchone()[0]
             details["tables"][table] = count
         except sqlite3.OperationalError:

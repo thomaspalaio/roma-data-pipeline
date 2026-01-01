@@ -6,10 +6,10 @@ Detailed documentation of all data sources used by Roma Data Pipeline.
 
 | Source | Records | License | URL |
 |--------|---------|---------|-----|
-| Pleiades | 27,000+ locations | CC-BY-3.0 | pleiades.stoa.org |
+| Pleiades | 35,000+ locations | CC-BY-3.0 | pleiades.stoa.org |
 | ORBIS | 450 sites, 2,200 edges | Open | orbis.stanford.edu |
-| ToposText | 8,000+ places | CC-BY-NC-SA | topostext.org |
-| AWMC | 186 provinces | CC-BY-NC | awmc.unc.edu |
+| ToposText | 8,000+ places | CC-BY-NC-SA-4.0 | topostext.org |
+| AWMC | 186 provinces | CC-BY-NC-3.0 | awmc.unc.edu |
 | Itiner-e | 16,500+ road segments | Open | itiner-e.org |
 | Wikidata | 100+ people/events | CC0 | wikidata.org |
 

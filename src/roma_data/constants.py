@@ -221,6 +221,13 @@ KNOWN_ROAD_DATES: dict[str, int] = {
 # =============================================================================
 
 # Travel speeds (km per day)
+# Sources:
+# - ORBIS: The Stanford Geospatial Network Model of the Roman World
+#   (Scheidel & Meeks, 2012) https://orbis.stanford.edu
+# - Foot: ~25-35 km/day for Roman legions (Roth, 1999 "Logistics of the Roman Army")
+# - Horse: ~50-60 km/day for mounted travel (Adams, 2007 "Land Transport in Roman Egypt")
+# - Cart: ~15-25 km/day for loaded ox carts (Laurence, 1999 "The Roads of Roman Italy")
+# - Ship: ~100+ km/day under favorable conditions (Casson, 1995 "Ships and Seamanship")
 TRAVEL_SPEEDS: dict[str, int] = {
     "foot": 30,
     "horse": 50,
@@ -229,6 +236,9 @@ TRAVEL_SPEEDS: dict[str, int] = {
 }
 
 # Seasonal factors for sea travel
+# Source: ORBIS project; reflects ancient mare clausum (closed sea) period
+# when Mediterranean sailing was considered unsafe (Nov-Mar)
+# See: Vegetius, De Re Militari 4.39; Casson 1995 "Ships and Seamanship"
 SEA_SEASONAL_FACTORS: dict[str, float] = {
     "jan": 2.0,  # Mare clausum
     "feb": 1.8,

@@ -3,7 +3,7 @@
 > Comprehensive ETL pipeline for Roman world data from Pleiades, ORBIS, Wikidata, and more.
 
 [![PyPI version](https://badge.fury.io/py/roma-data-pipeline.svg)](https://badge.fury.io/py/roma-data-pipeline)
-[![CI](https://github.com/romadatapipeline/roma-data-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/romadatapipeline/roma-data-pipeline/actions/workflows/ci.yml)
+[![CI](https://github.com/thomaspalaio/roma-data-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/thomaspalaio/roma-data-pipeline/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Data License: CC-BY-4.0](https://img.shields.io/badge/Data-CC--BY--4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
@@ -51,7 +51,7 @@ pip install roma-data-pipeline
 ### From Source
 
 ```bash
-git clone https://github.com/romadatapipeline/roma-data-pipeline
+git clone https://github.com/thomaspalaio/roma-data-pipeline
 cd roma-data-pipeline
 pip install -e ".[dev]"
 ```
@@ -59,7 +59,7 @@ pip install -e ".[dev]"
 ### Docker
 
 ```bash
-docker run -v $(pwd):/output ghcr.io/romadatapipeline/roma-data-pipeline
+docker run -v $(pwd):/output ghcr.io/thomaspalaio/roma-data-pipeline
 ```
 
 ## Usage
@@ -148,12 +148,12 @@ cursor = conn.execute("""
 
 | Source | Description | License |
 |--------|-------------|---------|
-| [Pleiades](https://pleiades.stoa.org) | Ancient place gazetteer with 30,000+ locations | CC-BY 3.0 |
-| [AWMC](https://github.com/AWMC/geodata) | Province boundaries at 4 time periods | CC-BY 3.0 |
-| [Itiner-e](https://itiner-e.org) | Roman road network GIS data | Academic |
+| [Pleiades](https://pleiades.stoa.org) | Ancient place gazetteer with 30,000+ locations | CC-BY-3.0 |
+| [AWMC](https://github.com/AWMC/geodata) | Province boundaries at 4 time periods | CC-BY-NC-3.0 |
+| [Itiner-e](https://itiner-e.org) | Roman road network GIS data | Open |
 | [Wikidata](https://www.wikidata.org) | Structured data for people, events, infrastructure | CC0 |
-| [ORBIS](https://orbis.stanford.edu) | Stanford's Roman travel network model | CC-BY |
-| [ToposText](https://topostext.org) | Ancient text citations by location | ODbL |
+| [ORBIS](https://orbis.stanford.edu) | Stanford's Roman travel network model | Open |
+| [ToposText](https://topostext.org) | Ancient text citations by location | CC-BY-NC-SA-4.0 |
 
 ## Database Schema
 
@@ -170,7 +170,7 @@ The output SQLite database contains these tables:
 - `location_search` - FTS5 full-text search index
 - `people_search` - FTS5 full-text search index
 
-See [docs/schema.md](docs/schema.md) for full schema documentation.
+See [docs/data-model.md](docs/data-model.md) for full schema documentation.
 
 ## Citation
 
@@ -181,7 +181,7 @@ If you use this software in academic work, please cite:
   author = {Palaio, Thomas},
   title = {Roma Data Pipeline},
   year = {2025},
-  url = {https://github.com/romadatapipeline/roma-data-pipeline},
+  url = {https://github.com/thomaspalaio/roma-data-pipeline},
   version = {0.1.0}
 }
 ```
@@ -222,5 +222,5 @@ This project builds on the work of many scholars and institutions:
 
 - [Documentation](https://roma-data-pipeline.readthedocs.io)
 - [PyPI Package](https://pypi.org/project/roma-data-pipeline/)
-- [Issue Tracker](https://github.com/romadatapipeline/roma-data-pipeline/issues)
+- [Issue Tracker](https://github.com/thomaspalaio/roma-data-pipeline/issues)
 - [Changelog](CHANGELOG.md)
